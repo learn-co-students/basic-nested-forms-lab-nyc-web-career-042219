@@ -1,3 +1,73 @@
 <%= form_for @recipe do |f| %>
-  Title: <%= f.text_field :title %>
+
+<!--
+	params =>
+		:recipe =>
+			:title => "Recipe Title",
+			:ingredients_attributes => {
+				0 =>
+					{:name => "Ingredient Name",
+					:quantity => "Ingredient Quantity",
+					:ingredient_type => "Ingredient Type"},
+				1 =>
+					{:name => "Ingredient Name",
+					:quantity => "Ingredient Quantity",
+					:ingredient_type => "Ingredient Type"}
+				},
+			:book_name => "Existing Book Name",
+			:new_book_attributes => {
+				name: "New Book Name",
+				author: "New Book Author"
+		}
+-->
+
+	<%= f.label :title %>
+	<%= f.text_field :title %>
+
+	<%= f.fields_for :ingredients do |i| %>
+	<%# binding.pry %>
+		<fieldset>
+			<legend><%= "#{i.object.ingredient_type}" %> Ingredient</legend>
+			<p>
+				<%= i.label :name %>
+				<%= i.text_field :name %>
+			</p>
+			<p>
+				<%= i.label :quantity %>
+				<%= i.text_field :quantity %>
+			</p>
+				<%= i.hidden_field :ingredient_type %>
+		</fieldset>
+	<% end %>
+
+	<%= f.fields_for :book do |b| %>
+	<%# binding.pry %>
+		<fieldset>
+			<legend>Book (author only required for new books)</legend>
+			<p>
+				<%= b.label :name %>
+				<%= b.text_field :name %>
+			</p>
+			<p>
+				<%= b.label :author %>
+				<%= b.text_field :author %>
+			</p>
+		</fieldset>
+	<% end %>
+
+<!--
+	<fieldset>
+		<legend>Ingredient 2</legend>
+		<p>
+			<label>Name</label>
+			<input type="text" name="recipe[ingredient_attributes][][name]">
+		</p>
+		<p>
+			<label>Quantity</label>
+			<input type="text" name="recipe[ingredient_attributes][][quantity]">
+		</p>
+	</fieldset>
+	-->
+
+	<%= f.submit %>
 <% end %>
