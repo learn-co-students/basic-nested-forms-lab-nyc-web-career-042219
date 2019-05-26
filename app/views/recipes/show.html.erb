@@ -1,9 +1,19 @@
+<h2>show</h2>
+
 <h2> <%= @recipe.title %></h2>
 
-<h3>Ingredients</h2>
+<h3>Ingredients</h3>
 
 <ul>
 <% @recipe.ingredients.each do |ingredient| %>
-  <li><%= "#{ingredient.name} X #{ingredient.quantity}" %></li>
+  <li><%= "#{ingredient.name} x #{ingredient.quantity}" %></li>
+	<ul>
+		<li><%= "type: #{ingredient.ingredient_type}" %></li>
+	</ul>
 <% end %>
 </ul>
+
+<h3>Found in:</h3>
+
+<p><%= @recipe.book.name %></p>
+<p>By <%= @recipe.book.author %></p>
